@@ -4,11 +4,3 @@ author: "Rounak Das"
 date: "2026-03-21"
 output: html_document
 ---
-
-```{r setup, include=FALSE, echo=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-if (!require(animint2)) install.packages("animint2")
-
-```
-
-This page is generated from `meta.csv` by `animint2::update_gallery()`.
