@@ -1,0 +1,10 @@
+---
+title: "Rounak's Animint Gallery"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+This page is generated from `meta.csv` by `animint2::update_gallery()`.
