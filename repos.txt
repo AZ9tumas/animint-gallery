@@ -1,3 +1,4 @@
 AZ9tumas/galton-board-example-2-viz
 AZ9tumas/galton-board-example-1-viz
+AZ9tumas/buffons-animation
 AZ9tumas/bisection-method-animation

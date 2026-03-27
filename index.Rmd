@@ -25,18 +25,9 @@ if (file.exists(meta_file)) {
   
   # 2. links: GitHub repo and source code
   meta_df$links <- with(meta_df, {
-    repo_link <- paste0('<a href="[https://github.com/](https://github.com/)', user, '/', repo, '">Repo</a>')
+    repo_link <- paste0('<a href="https://github.com/', user, '/', repo, '">Repo</a>')
     source_link <- paste0('<a href="', source, '">Source</a>')
-    
-    # Check for video column
-    video_link <- ""
-    if ("video" %in% names(meta_df)) {
-       video_link <- ifelse(!is.na(video) & video != "", 
-                            paste0(' | <a href="', video, '">Video</a>'), 
-                            "")
-    }
-    
-    paste0(repo_link, " | ", source_link, video_link)
+    paste0(repo_link, " | ", source_link)
   })
 
   # Organizing columns
