@@ -357,49 +357,6 @@ display: none;
 </div>
 
 
-<pre class="r"><code>meta_file &lt;- &quot;meta.csv&quot;
-
-if (file.exists(meta_file)) {
-  meta_df &lt;- read.csv(meta_file, stringsAsFactors = FALSE)
-  
-  # Split &quot;user/repo&quot; into two separate columns
-  owner_repo_parts &lt;- strsplit(meta_df$viz_owner_repo, &quot;/&quot;)
-  meta_df$user &lt;- sapply(owner_repo_parts, &quot;[&quot;, 1)
-  meta_df$repo &lt;- sapply(owner_repo_parts, &quot;[&quot;, 2)
-  
-  # 1. viz.link: Screenshot (Capture.PNG) linking to the animint page
-  meta_df$viz.link &lt;- with(meta_df, paste0(
-    &#39;&lt;a href=&quot;https://&#39;, user, &#39;.github.io/&#39;, repo, &#39;/&quot;&gt;&#39;,
-    &#39;&lt;img src=&quot;https://&#39;, user, &#39;.github.io/&#39;, repo, &#39;/Capture.PNG&quot; width=&quot;200&quot; style=&quot;border:1px solid #ddd; border-radius:4px; padding:5px;&quot; alt=&quot;Screenshot of &#39;, title, &#39;&quot;&gt;&#39;,
-    &#39;&lt;/a&gt;&#39;
-  ))
-  
-  # 2. links: GitHub repo and source code
-  meta_df$links &lt;- with(meta_df, {
-    repo_link &lt;- paste0(&#39;&lt;a href=&quot;[https://github.com/](https://github.com/)&#39;, user, &#39;/&#39;, repo, &#39;&quot;&gt;Repo&lt;/a&gt;&#39;)
-    source_link &lt;- paste0(&#39;&lt;a href=&quot;&#39;, source, &#39;&quot;&gt;Source&lt;/a&gt;&#39;)
-    
-    # Check for video column
-    video_link &lt;- &quot;&quot;
-    if (&quot;video&quot; %in% names(meta_df)) {
-       video_link &lt;- ifelse(!is.na(video) &amp; video != &quot;&quot;, 
-                            paste0(&#39; | &lt;a href=&quot;&#39;, video, &#39;&quot;&gt;Video&lt;/a&gt;&#39;), 
-                            &quot;&quot;)
-    }
-    
-    paste0(repo_link, &quot; | &quot;, source_link, video_link)
-  })
-
-  # Organizing columns
-  display_df &lt;- meta_df[, c(&quot;viz.link&quot;, &quot;title&quot;, &quot;links&quot;)]
-  colnames(display_df) &lt;- c(&quot;Gallery Link&quot;, &quot;Title&quot;, &quot;Project Links&quot;)
-
-  # Render table
-  knitr::kable(display_df, format = &quot;html&quot;, escape = FALSE, table.attr = &#39;class=&quot;table table-hover&quot;&#39;)
-  
-} else {
-  cat(&quot;\n\n&gt; **Note:** The `meta.csv` file was not found.&quot;)
-}</code></pre>
 <table class="table table-hover">
 <thead>
 <tr>
