@@ -1,10 +1,10 @@
 ---
-title: "My Animint Gallery"
+title: "Rounak's Animint Gallery"
+author: "Rounak Das"
+date: "2026-03-21"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
-```
-
-This page is generated from `meta.csv` by `animint2::update_gallery()`.
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+library(knitr)
