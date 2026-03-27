@@ -5,6 +5,47 @@ date: "2026-03-21"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
-library(knitr)
+```{r render_gallery_table, results='asis'}
+meta_file <- "meta.csv"
+
+if (file.exists(meta_file)) {
+  meta_df <- read.csv(meta_file, stringsAsFactors = FALSE)
+  
+  # Split "user/repo" into two separate columns
+  owner_repo_parts <- strsplit(meta_df$viz_owner_repo, "/")
+  meta_df$user <- sapply(owner_repo_parts, "[", 1)
+  meta_df$repo <- sapply(owner_repo_parts, "[", 2)
+  
+  # 1. viz.link: Screenshot (Capture.PNG) linking to the animint page
+  meta_df$viz.link <- with(meta_df, paste0(
+    '<a href="https://', user, '.github.io/', repo, '/">',
+    '<img src="https://', user, '.github.io/', repo, '/Capture.PNG" width="200" style="border:1px solid #ddd; border-radius:4px; padding:5px;" alt="Screenshot of ', title, '">',
+    '</a>'
+  ))
+  
+  # 2. links: GitHub repo and source code
+  meta_df$links <- with(meta_df, {
+    repo_link <- paste0('<a href="[https://github.com/](https://github.com/)', user, '/', repo, '">Repo</a>')
+    source_link <- paste0('<a href="', source, '">Source</a>')
+    
+    # Check for video column
+    video_link <- ""
+    if ("video" %in% names(meta_df)) {
+       video_link <- ifelse(!is.na(video) & video != "", 
+                            paste0(' | <a href="', video, '">Video</a>'), 
+                            "")
+    }
+    
+    paste0(repo_link, " | ", source_link, video_link)
+  })
+
+  # Organizing columns
+  display_df <- meta_df[, c("viz.link", "title", "links")]
+  colnames(display_df) <- c("Gallery Link", "Title", "Project Links")
+
+  # Render table
+  knitr::kable(display_df, format = "html", escape = FALSE, table.attr = 'class="table table-hover"')
+  
+} else {
+  cat("\n\n> **Note:** The `meta.csv` file was not found.")
+}
