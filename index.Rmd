@@ -49,3 +49,4 @@ if (file.exists(meta_file)) {
 } else {
   cat("\n\n> **Note:** The `meta.csv` file was not found.")
 }
+```
